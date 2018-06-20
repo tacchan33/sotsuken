@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">sotsuken</string>
+
+    <string name="menu_setting">設定</string>
+    <string name="menu_developer">開発者情報</string>
+</resources>

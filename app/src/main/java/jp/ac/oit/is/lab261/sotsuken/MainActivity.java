@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
+import java.util.ResourceBundle;
+
 
 public class MainActivity extends AppCompatActivity{
 
@@ -18,35 +20,25 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);//レイアウト適用
 
-        /* ログ出力 */
-        Log.d("debug", "MainActivity.onCreate()");
-
         /* ControlServiceが動いてなければ、起動する */
         if( !ControlService.isRunning() ) {
             startService( new Intent(getApplicationContext(), ControlService.class) );
         }
 
-
         CompoundButton toggleService = (CompoundButton)findViewById(R.id.toggle_service);
-        if( ScanWifiService.isRunning() ){
+        if( ControlService.isWifiScannerEnabled() ){//WifiScannerが有効時
             toggleService.setChecked(true);
-        }else{
+        }else{//WifiScannerが無効時
             toggleService.setChecked(false);
         }
         toggleService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String msg = "";
-                Intent intent = new Intent(getApplicationContext(),ScanWifiService.class);
                 if(isChecked == true) {
-                    startService(intent);
-                    msg = "開始!";
+                    ControlService.setWifiScannerEnabled(true);
                 }else{
-                    stopService(intent);
-                    msg = "停止";
+                    ControlService.setWifiScannerEnabled(false);
                 }
-                Toast.makeText(MainActivity.this,  "サービスを"+msg+"しました",Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -67,7 +59,11 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.setting:
-                startActivity(new Intent(MainActivity.this,SettingActivity.class));
+                if( !ControlService.isWifiScannerEnabled() ) {
+                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                }else{
+                    Toast.makeText(MainActivity.this,  "サービスを停止して下さい",Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.developer:
                 startActivity(new Intent(MainActivity.this,DeveloperActivity.class));

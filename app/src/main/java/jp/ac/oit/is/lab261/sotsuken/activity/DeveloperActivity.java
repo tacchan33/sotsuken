@@ -1,8 +1,10 @@
-package jp.ac.oit.is.lab261.sotsuken;
+package jp.ac.oit.is.lab261.sotsuken.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import jp.ac.oit.is.lab261.sotsuken.R;
 
 public class DeveloperActivity extends AppCompatActivity {
 

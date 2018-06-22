@@ -1,10 +1,9 @@
-package jp.ac.oit.is.lab261.sotsuken;
+package jp.ac.oit.is.lab261.sotsuken.activity;
 
 import android.app.ActivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,9 +11,10 @@ import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
-import jp.ac.oit.is.lab261.sotsuken.network.model.WifiScannerService;
+import jp.ac.oit.is.lab261.sotsuken.service.BackgroundService;
+import jp.ac.oit.is.lab261.sotsuken.service.ControlService;
+import jp.ac.oit.is.lab261.sotsuken.R;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         /* WifiScannerServiceが起動を判断してボタンを切り替える */
-        if( WifiScannerService.isRunning() ){//WifiScannerが有効時
+        if(BackgroundService.isRunning() ){//WifiScannerが有効時
             toggleService.setChecked(true);
         }else{//WifiScannerが無効時
             toggleService.setChecked(false);
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity{
         toggleService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Intent intent = new Intent(getApplicationContext(),WifiScannerService.class);
+                Intent intent = new Intent(getApplicationContext(),BackgroundService.class);
                 if(isChecked == true) {
                     startService(intent);
                 }else{
@@ -79,23 +79,6 @@ public class MainActivity extends AppCompatActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    // isActiveService(CheckService.class.getName())
-    public boolean isActiveService(String serviceClassName)
-    {
-        ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> runningServicesInfo = activityManager.getRunningServices(Integer.MAX_VALUE);
-
-        for (ActivityManager.RunningServiceInfo runningServiceInfo : runningServicesInfo)
-        {
-            if (runningServiceInfo.service.getClassName().equals(serviceClassName))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
 

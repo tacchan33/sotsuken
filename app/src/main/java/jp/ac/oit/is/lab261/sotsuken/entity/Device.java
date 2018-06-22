@@ -1,4 +1,4 @@
-package jp.ac.oit.is.lab261.sotsuken.network.entity;
+package jp.ac.oit.is.lab261.sotsuken.entity;
 
 import android.support.annotation.NonNull;
 

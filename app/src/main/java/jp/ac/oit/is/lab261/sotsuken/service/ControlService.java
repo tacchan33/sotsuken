@@ -1,11 +1,11 @@
-package jp.ac.oit.is.lab261.sotsuken;
+package jp.ac.oit.is.lab261.sotsuken.service;
 
 import android.app.Service;
 import android.support.annotation.Nullable;
 import android.content.Intent;
 import android.os.IBinder;
 
-import jp.ac.oit.is.lab261.sotsuken.network.model.WifiScannerService;
+import jp.ac.oit.is.lab261.sotsuken.Notifier;
 
 
 public class ControlService extends Service {
@@ -17,7 +17,6 @@ public class ControlService extends Service {
         return iRunning;
     }
 
-    WifiScannerService wifiScannerService;
     Notifier notifier;
 
     @Override

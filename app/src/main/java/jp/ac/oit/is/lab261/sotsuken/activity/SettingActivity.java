@@ -1,9 +1,11 @@
-package jp.ac.oit.is.lab261.sotsuken;
+package jp.ac.oit.is.lab261.sotsuken.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import jp.ac.oit.is.lab261.sotsuken.R;
 
 public class SettingActivity extends AppCompatActivity {
 

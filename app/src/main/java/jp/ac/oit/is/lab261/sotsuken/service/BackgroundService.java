@@ -1,15 +1,13 @@
-package jp.ac.oit.is.lab261.sotsuken.network.model;
+package jp.ac.oit.is.lab261.sotsuken.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.Collections;
@@ -17,12 +15,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jp.ac.oit.is.lab261.sotsuken.MainActivity;
 import jp.ac.oit.is.lab261.sotsuken.R;
-import jp.ac.oit.is.lab261.sotsuken.network.entity.Accesspoint;
-import jp.ac.oit.is.lab261.sotsuken.network.entity.Device;
+import jp.ac.oit.is.lab261.sotsuken.entity.Accesspoint;
+import jp.ac.oit.is.lab261.sotsuken.entity.Device;
 
-public class WifiScannerService extends Service {
+public class BackgroundService extends Service {
 
     private static boolean iRunning = false;
     private static void setRunning(boolean state){iRunning=state;}

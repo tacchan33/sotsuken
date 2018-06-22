@@ -25,17 +25,17 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".ControlService" />
-        <service android:name=".network.model.WifiScannerService" />
+        <service android:name=".service.ControlService" />
+        <service android:name=".service.BackgroundService" />
 
-        <activity android:name=".MainActivity" >
+        <activity android:name=".activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".DeveloperActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.DeveloperActivity" />
 
 
     </application>

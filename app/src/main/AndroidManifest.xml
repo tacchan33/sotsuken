@@ -26,6 +26,7 @@
         </receiver>
 
         <service android:name=".ControlService" />
+        <service android:name=".network.model.WifiScannerService" />
 
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -33,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SettingActivity" />
         <activity android:name=".DeveloperActivity" />
 

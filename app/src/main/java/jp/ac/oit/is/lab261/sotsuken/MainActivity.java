@@ -1,5 +1,6 @@
 package jp.ac.oit.is.lab261.sotsuken;
 
+import android.app.ActivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,34 +11,42 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
+import java.util.List;
 import java.util.ResourceBundle;
+
+import jp.ac.oit.is.lab261.sotsuken.network.model.WifiScannerService;
 
 
 public class MainActivity extends AppCompatActivity{
+
+    CompoundButton toggleService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);//レイアウト適用
+        toggleService = (CompoundButton)findViewById(R.id.toggle_service);
 
         /* ControlServiceが動いてなければ、起動する */
         if( !ControlService.isRunning() ) {
             startService( new Intent(getApplicationContext(), ControlService.class) );
         }
 
-        CompoundButton toggleService = (CompoundButton)findViewById(R.id.toggle_service);
-        if( ControlService.isWifiScannerEnabled() ){//WifiScannerが有効時
+        /* WifiScannerServiceが起動を判断してボタンを切り替える */
+        if( WifiScannerService.isRunning() ){//WifiScannerが有効時
             toggleService.setChecked(true);
         }else{//WifiScannerが無効時
             toggleService.setChecked(false);
         }
+
         toggleService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Intent intent = new Intent(getApplicationContext(),WifiScannerService.class);
                 if(isChecked == true) {
-                    ControlService.setWifiScannerEnabled(true);
+                    startService(intent);
                 }else{
-                    ControlService.setWifiScannerEnabled(false);
+                    stopService(intent);
                 }
             }
         });
@@ -59,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.setting:
-                if( !ControlService.isWifiScannerEnabled() ) {
+                if( !toggleService.isChecked() ) {
                     startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 }else{
                     Toast.makeText(MainActivity.this,  "サービスを停止して下さい",Toast.LENGTH_SHORT).show();
@@ -71,5 +80,23 @@ public class MainActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    // isActiveService(CheckService.class.getName())
+    public boolean isActiveService(String serviceClassName)
+    {
+        ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> runningServicesInfo = activityManager.getRunningServices(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : runningServicesInfo)
+        {
+            if (runningServiceInfo.service.getClassName().equals(serviceClassName))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

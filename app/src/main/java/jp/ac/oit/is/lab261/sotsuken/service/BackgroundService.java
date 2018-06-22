@@ -18,6 +18,7 @@ import java.util.TimerTask;
 import jp.ac.oit.is.lab261.sotsuken.R;
 import jp.ac.oit.is.lab261.sotsuken.entity.Accesspoint;
 import jp.ac.oit.is.lab261.sotsuken.entity.Device;
+import jp.ac.oit.is.lab261.sotsuken.model.network.WifiScanner;
 
 public class BackgroundService extends Service {
 
@@ -43,6 +44,7 @@ public class BackgroundService extends Service {
 
     NotificationManager notificationManager;
     Notification notification;
+    WifiScanner wifiScanner = new WifiScanner();
 
 
     public void onCreate(){
@@ -79,7 +81,9 @@ public class BackgroundService extends Service {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Log.d(TAG,"hahaha!");
+
+
+                wifiScanner.WifiScan(getApplicationContext());
 
                 notification = new Notification.Builder(getApplicationContext())//通知を生成
                         .setSmallIcon(R.drawable.ic_launcher_background)//通知のイラスト

@@ -1,6 +1,5 @@
 package jp.ac.oit.is.lab261.sotsuken.activity;
 
-import android.app.ActivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
-
-import java.util.List;
 
 import jp.ac.oit.is.lab261.sotsuken.service.BackgroundService;
 import jp.ac.oit.is.lab261.sotsuken.service.ControlService;
@@ -51,6 +48,9 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        ControlPermission controlPermission = new ControlPermission();
+        controlPermission.setPermission(this);
+
 
     }
 
@@ -80,6 +80,5 @@ public class MainActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

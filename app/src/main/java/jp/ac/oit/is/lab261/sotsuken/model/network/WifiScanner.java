@@ -15,6 +15,14 @@ public class WifiScanner {
     private static final Integer RANK = 3;
     private ScanResult sort[] = new ScanResult[RANK];
 
+    public WifiScanner(){
+    }
+
+    public void onDestroy(){
+
+    }
+
+
     public void WifiScan(Context context){
         wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> scanResults = wifiManager.getScanResults();

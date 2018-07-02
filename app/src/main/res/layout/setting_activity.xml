@@ -10,7 +10,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="データベース接続先" />
+        android:text="アプリケーションサーバ接続先" />
 
     <EditText
         android:id="@+id/host"
@@ -32,6 +32,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/interval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/commit"

@@ -13,7 +13,7 @@ import jp.ac.oit.is.lab261.sotsuken.model.storage.SettingImport;
 
 public class SettingActivity extends AppCompatActivity {
 
-    EditText host,user,password;
+    EditText host,user,password,interval;
     Button commit;
 
     @Override
@@ -30,10 +30,12 @@ public class SettingActivity extends AppCompatActivity {
         host = (EditText)findViewById(R.id.host);
         user = (EditText)findViewById(R.id.user);
         password = (EditText)findViewById(R.id.password);
+        interval = (EditText)findViewById(R.id.interval);
         commit = (Button)findViewById(R.id.commit);
-        host.setText(setting.getHost());
-        user.setText(setting.getUser());
-        password.setText(setting.getPassword());
+        host.setText( setting.getHost() );
+        user.setText( setting.getUser() );
+        password.setText( setting.getPassword() );
+        interval.setText( String.valueOf(setting.getInterval()) );
 
         commit.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -41,6 +43,7 @@ public class SettingActivity extends AppCompatActivity {
                 setting.setHost(host.getText().toString());
                 setting.setUser(user.getText().toString());
                 setting.setPassword(password.getText().toString());
+                setting.setInterval( Integer.valueOf(interval.getText().toString()) );
                 if( setting.commit() ){
                     Toast.makeText(SettingActivity.this,  "保存しました",Toast.LENGTH_SHORT).show();
                 }else{

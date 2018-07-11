@@ -10,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpUploader extends AsyncTask<String, Void, String> {
+    private Integer timeout;
+
     private String host = null;//アプリケーションサーバ
     private String user = null;//学籍番号
     private String password = null;//学籍番号パスワード
@@ -17,12 +19,16 @@ public class HttpUploader extends AsyncTask<String, Void, String> {
     private String[] bssid = new String[3];
     private Integer[] level = new Integer[3];
 
-
     public HttpUploader(@NonNull String host,@NonNull String user,@NonNull String password){
         this.host = host;
         this.user = user;
         this.password = password;
     }
+
+    public void setTimeout(Integer timeout){
+        this.timeout = timeout;
+    }
+
 
     // 非同期処理
     @Override
@@ -50,7 +56,7 @@ public class HttpUploader extends AsyncTask<String, Void, String> {
             httpURLConnection.setInstanceFollowRedirects(false);//リダイレクト無効
             httpURLConnection.setDoOutput(true);// データを書き込む
             httpURLConnection.setReadTimeout(10000);//読み取り時間制限
-            httpURLConnection.setConnectTimeout(5000);//接続時間制限
+            httpURLConnection.setConnectTimeout(timeout);//接続時間制限
             httpURLConnection.connect();//接続
 
             // POSTデータ送信処理

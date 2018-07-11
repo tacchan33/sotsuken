@@ -48,6 +48,7 @@ public class BackgroundService extends Service {
                     wifiManager.setWifiEnabled(true);
                 }
                 httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword());
+                httpUploader.setTimeout(setting.getInterval()/2);
 
                 wifiScanner.WifiScan();
                 for(int i=0;i<wifiScanner.RANK;i++){

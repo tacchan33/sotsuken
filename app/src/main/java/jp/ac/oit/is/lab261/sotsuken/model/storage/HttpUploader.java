@@ -50,7 +50,7 @@ public class HttpUploader extends AsyncTask<String, Void, String> {
             httpURLConnection.setInstanceFollowRedirects(false);//リダイレクト無効
             httpURLConnection.setDoOutput(true);// データを書き込む
             httpURLConnection.setReadTimeout(10000);//読み取り時間制限
-            httpURLConnection.setConnectTimeout(20000);//接続時間制限
+            httpURLConnection.setConnectTimeout(5000);//接続時間制限
             httpURLConnection.connect();//接続
 
             // POSTデータ送信処理

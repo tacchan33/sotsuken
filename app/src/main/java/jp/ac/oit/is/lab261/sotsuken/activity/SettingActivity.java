@@ -37,6 +37,7 @@ public class SettingActivity extends AppCompatActivity {
         password.setText( setting.getPassword() );
         interval.setText( String.valueOf(setting.getInterval()) );
 
+        /* 保存ボタンイベント */
         commit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

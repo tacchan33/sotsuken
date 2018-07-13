@@ -14,7 +14,7 @@ public class SettingImport {
     private final String PASSWORD = "password";
     private final String INTERVAL = "interval";
 
-    private SharedPreferences sharedPreferences = null;
+    private SharedPreferences sharedPreferences;
 
     private String host = "";
     private String user = "";

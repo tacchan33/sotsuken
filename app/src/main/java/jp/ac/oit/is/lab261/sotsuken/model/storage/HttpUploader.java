@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpUploader extends AsyncTask<String, Void, String> {
-    private Integer timeout;
+    private Integer timeout = 5000;//初期値
 
     private String host = null;//アプリケーションサーバ
     private String user = null;//学籍番号
@@ -25,7 +25,7 @@ public class HttpUploader extends AsyncTask<String, Void, String> {
         this.password = password;
     }
 
-    public void setTimeout(Integer timeout){
+    public void setTimeout(@NonNull Integer timeout){
         this.timeout = timeout;
     }
 

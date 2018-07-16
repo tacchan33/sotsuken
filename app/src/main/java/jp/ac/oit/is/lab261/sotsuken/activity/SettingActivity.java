@@ -9,12 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import jp.ac.oit.is.lab261.sotsuken.R;
+import jp.ac.oit.is.lab261.sotsuken.model.storage.HttpUploader;
 import jp.ac.oit.is.lab261.sotsuken.model.storage.SettingImport;
 
 public class SettingActivity extends AppCompatActivity {
 
     EditText host,user,password,interval;
-    Button commit;
+    Button commit,connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class SettingActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
         interval = (EditText)findViewById(R.id.interval);
         commit = (Button)findViewById(R.id.commit);
+        connect = (Button)findViewById(R.id.connect);
+
         host.setText( setting.getHost() );
         user.setText( setting.getUser() );
         password.setText( setting.getPassword() );
@@ -45,11 +48,25 @@ public class SettingActivity extends AppCompatActivity {
                 setting.setUser(user.getText().toString());
                 setting.setPassword(password.getText().toString());
                 setting.setInterval( Integer.valueOf(interval.getText().toString()) );
-                if( setting.commit() ){
-                    Toast.makeText(SettingActivity.this,  "保存しました",Toast.LENGTH_SHORT).show();
+                setting.setConnection(false);
+                Toast.makeText(SettingActivity.this,  "保存しました",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /* 接続ボタンイベント */
+        connect.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                HttpUploader httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword());
+                httpUploader.setTimeout(setting.getInterval()/2);
+                if( true ){//接続チェック
+                    Toast.makeText(SettingActivity.this,  "接続できました",Toast.LENGTH_SHORT).show();
+                    setting.setConnection(true);
                 }else{
-                    Toast.makeText(SettingActivity.this,  "保存できませんでした",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingActivity.this,  "接続できませんでした",Toast.LENGTH_SHORT).show();
+                    setting.setConnection(false);
                 }
+                setting.commit();
             }
         });
 

@@ -12,14 +12,10 @@ public class SettingImport {
     private final String HOST = "host";//データのキー
     private final String USER = "user";
     private final String PASSWORD = "password";
+    private final String CONNECTION = "connection";
     private final String INTERVAL = "interval";
 
     private SharedPreferences sharedPreferences;
-
-    private String host = "";
-    private String user = "";
-    private String password = "";
-    private Integer interval;//1000で1秒
 
     public SettingImport(Context context){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -28,28 +24,28 @@ public class SettingImport {
     }
 
     public void setHost(String host){
-        this.host = host;
+        sharedPreferences.edit().putString(HOST,host).commit();
     }
 
     public void setUser(String user){
-        this.user = user;
+        sharedPreferences.edit().putString(USER,user).commit();
     }
 
     public void setPassword(String password){
-        this.password = password;
+        sharedPreferences.edit().putString(PASSWORD,password).commit();
     }
 
     public void setInterval(Integer interval){
-        this.interval = interval;
+        /* 1000で1秒 */
+        sharedPreferences.edit().putInt(INTERVAL,interval).commit();
+    }
+
+    public void setConnection(Boolean connection){
+        sharedPreferences.edit().putBoolean(CONNECTION,connection).commit();
     }
 
     public boolean commit(){
-        sharedPreferences.edit()
-                .putString(HOST,host)
-                .putString(USER,user)
-                .putString(PASSWORD,password)
-                .putInt(INTERVAL,interval)
-                .commit();
+        sharedPreferences.edit().commit();
         return true;
     }
 
@@ -67,6 +63,10 @@ public class SettingImport {
 
     public Integer getInterval(){
         return sharedPreferences.getInt(INTERVAL,60000);
+    }
+
+    public Boolean getConnection(){
+        return sharedPreferences.getBoolean(CONNECTION,false);
     }
 
 }

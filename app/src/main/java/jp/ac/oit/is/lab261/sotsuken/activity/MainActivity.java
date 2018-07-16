@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
+import jp.ac.oit.is.lab261.sotsuken.model.storage.SettingImport;
 import jp.ac.oit.is.lab261.sotsuken.service.BackgroundService;
 import jp.ac.oit.is.lab261.sotsuken.service.ControlService;
 import jp.ac.oit.is.lab261.sotsuken.R;
@@ -16,24 +17,28 @@ import jp.ac.oit.is.lab261.sotsuken.R;
 
 public class MainActivity extends AppCompatActivity{
 
+    SettingImport setting;
+
     CompoundButton toggleService;
 
-    @Override
+    /* --------------------------------------------------------- */
+    /* ------------------Activityライフサイクル----------------- */
+    /* --------------------------------------------------------- */
+    @Override/* アクティビティが初めて作られた時 */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);//レイアウト適用
+
+        setting = new SettingImport(getApplicationContext());
+
+        ControlPermission controlPermission = new ControlPermission();
+        controlPermission.setPermission(this);
+
         toggleService = (CompoundButton)findViewById(R.id.toggle_service);
 
         /* ControlServiceが動いてなければ、起動する */
         if( !ControlService.isRunning() ) {
             startService( new Intent(getApplicationContext(), ControlService.class) );
-        }
-
-        /* WifiScannerServiceが起動を判断してボタンを切り替える */
-        if(BackgroundService.isRunning() ){//WifiScannerが有効時
-            toggleService.setChecked(true);
-        }else{//WifiScannerが無効時
-            toggleService.setChecked(false);
         }
 
         toggleService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -47,11 +52,37 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+    }
 
-        ControlPermission controlPermission = new ControlPermission();
-        controlPermission.setPermission(this);
+    @Override/* アクティビティ開始された時 */
+    protected void onStart(){
+        super.onStart();
+    }
 
+    @Override/* アクティビティ表示された時とonPause()終了直後 */
+    protected void onResume(){
+        super.onResume();
+        reload();
+    }
 
+    @Override/* 別アクティビティが表示されるとき */
+    protected  void onPause(){
+        super.onPause();
+    }
+
+    @Override/* アクティビティ非表示された時 */
+    protected void onStop(){
+        super.onStop();
+    }
+
+    @Override/* onStop()終了直後からonStart() */
+    protected void onRestart(){
+        super.onRestart();
+    }
+
+    @Override/* アクティビティがメモリから解放される時 */
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
     /* --------------------------------------------------------- */
@@ -79,6 +110,26 @@ public class MainActivity extends AppCompatActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    //再描画
+    private void reload(){
+        /* WifiScannerServiceが起動を判断してボタンを切り替える */
+        if(BackgroundService.isRunning() ){//WifiScannerが有効時
+            toggleService.setChecked(true);
+        }else{//WifiScannerが無効時
+            toggleService.setChecked(false);
+        }
+        /* アプリケーションサーバ接続確認でボタンを有効無効切り替える */
+        if( setting.getConnection() ){
+            toggleService.setEnabled(true);
+        }else{
+            toggleService.setEnabled(false);
+        }
+
     }
 
 }

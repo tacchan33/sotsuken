@@ -1,5 +1,6 @@
 package jp.ac.oit.is.lab261.sotsuken.model.storage;
 
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -9,12 +10,28 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import jp.ac.oit.is.lab261.sotsuken.model.network.WifiScanner;
+
+/*
+型1 … Activityからスレッド処理へ渡したい変数の型
+ *          ※ Activityから呼び出すexecute()の引数の型
+ *          ※ doInBackground()の引数の型
+ *
+ *   型2 … 進捗度合を表示する時に利用したい型
+ *          ※ onProgressUpdate()の引数の型
+ *
+ *   型3 … バックグラウンド処理完了時に受け取る型
+ *          ※ doInBackground()の戻り値の型
+ *          ※ onPostExecute()の引数の型
+ *
+ *   ※ それぞれ不要な場合は、Voidを設定すれば良い
+ */
 public class HttpUploader extends AsyncTask<String, Void, String> {
-    private Integer timeout = 5000;//初期値
 
     private String host = null;//アプリケーションサーバ
     private String user = null;//学籍番号
     private String password = null;//学籍番号パスワード
+    private Integer timeout = 5000;
     private String macaddress = null;//送信元macアドレス
     private String[] bssid = new String[3];
     private Integer[] level = new Integer[3];
@@ -27,6 +44,34 @@ public class HttpUploader extends AsyncTask<String, Void, String> {
 
     public void setTimeout(@NonNull Integer timeout){
         this.timeout = timeout;
+    }
+
+    /* コネクション確認 */
+    public boolean availableConnection(){
+        boolean result = false;
+
+        HttpURLConnection httpURLConnection = null;//コネクション
+        URL url = null;//URL
+        try{
+            url = new URL(host);// URL設定
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");//リクエストメソッド設定
+            httpURLConnection.setInstanceFollowRedirects(false);//リダイレクト無効
+            httpURLConnection.setDoOutput(true);// データを書き込む
+            httpURLConnection.setReadTimeout(10000);//読み取り時間制限
+            httpURLConnection.setConnectTimeout(timeout);//接続時間制限
+            Log.d("HttpUploader","ここ");
+            httpURLConnection.connect();//接続
+            result = true;
+        }catch(IOException e) {
+            e.printStackTrace();
+        }finally{
+            /* コネクション破棄 */
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
+        }
+        return result;
     }
 
 
@@ -50,7 +95,6 @@ public class HttpUploader extends AsyncTask<String, Void, String> {
 
         try{
             url = new URL(host);// URL設定
-            Log.d("aa","ここまで");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST");//リクエストメソッド設定
             httpURLConnection.setInstanceFollowRedirects(false);//リダイレクト無効

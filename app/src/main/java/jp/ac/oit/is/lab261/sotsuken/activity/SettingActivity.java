@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.net.HttpURLConnection;
+
 import jp.ac.oit.is.lab261.sotsuken.R;
 import jp.ac.oit.is.lab261.sotsuken.model.storage.HttpUploader;
 import jp.ac.oit.is.lab261.sotsuken.model.storage.SettingImport;
@@ -57,9 +59,9 @@ public class SettingActivity extends AppCompatActivity {
         connect.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                HttpUploader httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword());
-                httpUploader.setTimeout(setting.getInterval()/2);
-                if( true ){//接続チェック
+                HttpUploader httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword(),setting.getInterval()/2);
+                httpUploader.execute( HttpUploader.TEST );
+                if( httpUploader.getHttpCode() == HttpURLConnection.HTTP_OK){//接続チェック
                     Toast.makeText(SettingActivity.this,  "接続できました",Toast.LENGTH_SHORT).show();
                     setting.setConnection(true);
                 }else{

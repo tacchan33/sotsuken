@@ -47,16 +47,15 @@ public class BackgroundService extends Service {
                 if( !wifiManager.isWifiEnabled() ){
                     wifiManager.setWifiEnabled(true);
                 }
-                httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword());
-                httpUploader.setTimeout(setting.getInterval()/2);
+                wifiScanner.WifiScan();//WiFiビーコンスキャン
 
-                wifiScanner.WifiScan();
-                for(int i=0;i<wifiScanner.RANK;i++){
+                httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword(),setting.getInterval()/2);
+                for(int i=0;i<wifiScanner.RANK;i++){//データセット
                     httpUploader.setMACAddress(wifiScanner.getMACAddress());
                     httpUploader.setBSSID(i,wifiScanner.getBSSID(i));
                     httpUploader.setLEVEL(i,wifiScanner.getLEVEL(i));
                 }
-                httpUploader.execute();
+                httpUploader.execute(HttpUploader.UPLOAD);//通信
             }
         }, 0, setting.getInterval());
         return START_STICKY;

@@ -9,15 +9,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
-import jp.ac.oit.is.lab261.sotsuken.model.storage.SettingImport;
+import java.net.HttpURLConnection;
+
+import jp.ac.oit.is.lab261.sotsuken.model.storage.HttpUploader;
 import jp.ac.oit.is.lab261.sotsuken.service.BackgroundService;
 import jp.ac.oit.is.lab261.sotsuken.service.ControlService;
 import jp.ac.oit.is.lab261.sotsuken.R;
 
 
 public class MainActivity extends AppCompatActivity{
-
-    SettingImport setting;
 
     CompoundButton toggleService;
 
@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);//レイアウト適用
-
-        setting = new SettingImport(getApplicationContext());
 
         ControlPermission controlPermission = new ControlPermission();
         controlPermission.setPermission(this);
@@ -124,10 +122,11 @@ public class MainActivity extends AppCompatActivity{
             toggleService.setChecked(false);
         }
         /* アプリケーションサーバ接続確認でボタンを有効無効切り替える */
-        if( setting.getConnection() ){
+        if( HttpUploader.getHttpCode() == HttpURLConnection.HTTP_OK ){
             toggleService.setEnabled(true);
         }else{
             toggleService.setEnabled(false);
+            Toast.makeText(MainActivity.this,  "アプリケーションサーバ設定に誤りがあります",Toast.LENGTH_SHORT).show();
         }
 
     }

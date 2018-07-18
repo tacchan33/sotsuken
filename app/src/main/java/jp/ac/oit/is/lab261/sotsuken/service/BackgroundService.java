@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,9 +45,10 @@ public class BackgroundService extends Service {
                 if( !wifiManager.isWifiEnabled() ){
                     wifiManager.setWifiEnabled(true);
                 }
+
                 wifiScanner.WifiScan();//WiFiビーコンスキャン
 
-                httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword(),setting.getInterval()/2);
+                httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword(),setting.getInterval());
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
                     httpUploader.setMACAddress(wifiScanner.getMACAddress());
                     httpUploader.setBSSID(i,wifiScanner.getBSSID(i));

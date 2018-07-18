@@ -22,8 +22,6 @@ import java.net.URL;
  *
  *   ※ それぞれ不要な場合は、Voidを設定すれば良い
  */
-
-
 public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
     public static final String TEST = "TEST";
@@ -80,9 +78,6 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
             if ( params[0].equals(HttpUploader.TEST) ) {//テスト接続
                 httpURLConnection.connect();//接続
-                if( httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK ){
-                }else{
-                }
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力

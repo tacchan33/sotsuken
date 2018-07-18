@@ -12,7 +12,6 @@ public class SettingImport {
     private final String HOST = "host";//データのキー
     private final String USER = "user";
     private final String PASSWORD = "password";
-    private final String CONNECTION = "connection";
     private  final String INTERVAL = "interval";
 
     private SharedPreferences sharedPreferences;
@@ -40,11 +39,7 @@ public class SettingImport {
         sharedPreferences.edit().putInt(INTERVAL,interval).commit();
     }
 
-    public void setConnection(Boolean connection){
-        sharedPreferences.edit().putBoolean(CONNECTION,connection).commit();
-    }
-
-    public  String getHost(){
+    public String getHost(){
         return sharedPreferences.getString(HOST,"(例)http://192.168.0.1/index.php");
     }
 
@@ -60,8 +55,5 @@ public class SettingImport {
         return sharedPreferences.getInt(INTERVAL,60000);
     }
 
-    public Boolean getConnection(){
-        return sharedPreferences.getBoolean(CONNECTION,false);
-    }
 
 }

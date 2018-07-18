@@ -1,17 +1,12 @@
 package jp.ac.oit.is.lab261.sotsuken.model.storage;
 
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import jp.ac.oit.is.lab261.sotsuken.model.network.WifiScanner;
 
 /*
 型1 … Activityからスレッド処理へ渡したい変数の型
@@ -29,17 +24,10 @@ import jp.ac.oit.is.lab261.sotsuken.model.network.WifiScanner;
  */
 
 
-public class HttpUploader extends AsyncTask<String, Void, Void> {
+public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
     public static final String TEST = "TEST";
     public static final String UPLOAD = "UPLOAD";
-
-    public HttpUploader(@NonNull String host,@NonNull String user,@NonNull String password,@Nullable Integer timeout){
-        setHost(host);
-        setUser(user);
-        setPassword(password);
-        setTimeout(timeout);
-    }
 
 
     /* 接続必要情報 */
@@ -47,15 +35,19 @@ public class HttpUploader extends AsyncTask<String, Void, Void> {
     private String user = "";//ユーザ名
     private String password = "";//パスワード
     private Integer timeout = 5000;
-    public void setHost(@Nullable String host){ this.host = host; }
-    public void setUser(@Nullable String user){ this.user = user; }
-    public void setPassword(@Nullable String password){ this.password = password; }
-    public void setTimeout(@NonNull Integer timeout){ this.timeout = timeout; }
+
+    public HttpUploader(@Nullable String host, @Nullable String user, @Nullable String password, @Nullable Integer interval){
+        this.host = host;
+        this.user = user;
+        this.password = password;
+        this.timeout = interval/2;
+    }
+
 
     /* HTTPステータスコード */
-    private Integer httpCode = 0;
-    private void setHttpCode(Integer code){ this.httpCode = code; }
-    public Integer getHttpCode(){ return this.httpCode; }
+    private static Integer httpCode = 0;
+    private static void setHttpCode(Integer code){ httpCode = code; }
+    public static Integer getHttpCode(){ return httpCode; }
 
     /* アップロード情報 */
     private String macaddress = null;//送信元macアドレス
@@ -66,9 +58,14 @@ public class HttpUploader extends AsyncTask<String, Void, Void> {
     public void setLEVEL(Integer index,Integer level){ this.level[index] = level; }
 
 
+    @Override
+    protected void onPreExecute(){
+        super.onPreExecute();
+    }
+
     // 非同期処理
     @Override
-    protected Void doInBackground(@Nullable String... params) {
+    protected Integer doInBackground(@Nullable String... params) {
         HttpURLConnection httpURLConnection = null;//コネクション
         URL url;//URL
 
@@ -83,6 +80,9 @@ public class HttpUploader extends AsyncTask<String, Void, Void> {
 
             if ( params[0].equals(HttpUploader.TEST) ) {//テスト接続
                 httpURLConnection.connect();//接続
+                if( httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK ){
+                }else{
+                }
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
@@ -123,6 +123,14 @@ public class HttpUploader extends AsyncTask<String, Void, Void> {
         }
 
         return null;
+    }
+
+    protected void onProgressUpdate(Integer... progress){
+        super.onProgressUpdate(progress);
+    }
+
+    protected void onPostExecute(Integer result){
+        super.onPostExecute(result);
     }
 
 }

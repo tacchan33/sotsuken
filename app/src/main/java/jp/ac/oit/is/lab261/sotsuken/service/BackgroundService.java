@@ -3,7 +3,6 @@ package jp.ac.oit.is.lab261.sotsuken.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 

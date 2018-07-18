@@ -13,7 +13,7 @@ public class SettingImport {
     private final String USER = "user";
     private final String PASSWORD = "password";
     private final String CONNECTION = "connection";
-    private final String INTERVAL = "interval";
+    private  final String INTERVAL = "interval";
 
     private SharedPreferences sharedPreferences;
 
@@ -44,12 +44,7 @@ public class SettingImport {
         sharedPreferences.edit().putBoolean(CONNECTION,connection).commit();
     }
 
-    public boolean commit(){
-        sharedPreferences.edit().commit();
-        return true;
-    }
-
-    public String getHost(){
+    public  String getHost(){
         return sharedPreferences.getString(HOST,"(例)http://192.168.0.1/index.php");
     }
 

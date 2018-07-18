@@ -50,6 +50,12 @@
         android:layout_height="wrap_content"
         android:text="アプリケーションサーバ接続確認" />
 
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="接続ステータス" />
+
     <Button
         android:id="@+id/connect"
         android:layout_width="match_parent"

@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity{
             toggleService.setChecked(false);
         }
         /* アプリケーションサーバ接続確認でボタンを有効無効切り替える */
+        Toast.makeText(MainActivity.this,  "HTTP/"+HttpUploader.getHttpCode(),Toast.LENGTH_SHORT).show();
         if( HttpUploader.getHttpCode() == HttpURLConnection.HTTP_OK ){
             toggleService.setEnabled(true);
         }else{

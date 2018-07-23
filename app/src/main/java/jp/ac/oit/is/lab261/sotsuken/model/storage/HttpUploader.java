@@ -2,6 +2,7 @@ package jp.ac.oit.is.lab261.sotsuken.model.storage;
 
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.OutputStream;

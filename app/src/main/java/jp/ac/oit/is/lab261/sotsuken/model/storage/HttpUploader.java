@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 /*
 型1 … Activityからスレッド処理へ渡したい変数の型
@@ -71,15 +73,23 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
         try {
             url = new URL(host);// URL設定
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");//リクエストメソッド設定
             httpURLConnection.setInstanceFollowRedirects(true);//リダイレクト
-            httpURLConnection.setDoOutput(true);// データを書き込む
             httpURLConnection.setReadTimeout(10000);//読み取り時間制限
             httpURLConnection.setConnectTimeout(timeout);//接続時間制限
+            httpURLConnection.setUseCaches(false);//キャッシュを許可する
+            httpURLConnection.setChunkedStreamingMode(0);
+            httpURLConnection.setRequestProperty("Accept-Language", Locale.getDefault().toString());
+            httpURLConnection.setRequestProperty("User-Agent", "Android");
+            httpURLConnection.setRequestProperty("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
 
             if ( params[0].equals(HttpUploader.TEST) ) {//テスト接続
+                Log.d("HttpUploader","TEST");
+                httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect();//接続
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
+                Log.d("HttpUploader","UPLOAD");
+                httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
                 String data =

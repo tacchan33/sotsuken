@@ -90,6 +90,8 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 Log.d("HttpUploader","UPLOAD");
                 httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);//リクエストのbody送信を許可する
+                httpURLConnection.setDoInput(true);//レスポンスのbody送信を許可する
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
                 String data =

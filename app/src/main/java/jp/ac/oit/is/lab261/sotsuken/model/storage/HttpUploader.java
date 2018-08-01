@@ -58,8 +58,6 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     public void setBSSID(Integer index,String bssid){ this.bssid[index] = bssid; }
     public void setLEVEL(Integer index,Integer level){ this.level[index] = level; }
 
-
-        super.onPreExecute();
     HttpURLConnection httpURLConnection = null;//コネクション
     URL url;//URL
 

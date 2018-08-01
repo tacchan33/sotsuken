@@ -59,17 +59,14 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     public void setLEVEL(Integer index,Integer level){ this.level[index] = level; }
 
 
-    @Override
-    protected void onPreExecute(){
         super.onPreExecute();
-    }
+    HttpURLConnection httpURLConnection = null;//コネクション
+    URL url;//URL
+
 
     // 非同期処理
     @Override
     protected Integer doInBackground(@Nullable String... params) {
-        HttpURLConnection httpURLConnection = null;//コネクション
-        URL url;//URL
-
         try {
             url = new URL(host);// URL設定
             httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -135,10 +132,6 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
     protected void onProgressUpdate(Integer... progress){
         super.onProgressUpdate(progress);
-    }
-
-    protected void onPostExecute(Integer result){
-        super.onPostExecute(result);
     }
 
 }

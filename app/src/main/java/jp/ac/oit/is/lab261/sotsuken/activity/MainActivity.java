@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.setting:
-                if( !toggleService.isChecked() ) {
+                if( !BackgroundService.isRunning() ) {
                     startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 }else{
                     Toast.makeText(MainActivity.this,  "サービスを停止して下さい",Toast.LENGTH_SHORT).show();
@@ -127,6 +127,10 @@ public class MainActivity extends AppCompatActivity{
             toggleService.setEnabled(true);
         }else{
             toggleService.setEnabled(false);
+            if( BackgroundService.isRunning() ) {
+                Intent intent = new Intent(getApplicationContext(), BackgroundService.class);
+                stopService(intent);
+            }
             Toast.makeText(MainActivity.this,  "アプリケーションサーバ設定に誤りがあります",Toast.LENGTH_SHORT).show();
         }
 

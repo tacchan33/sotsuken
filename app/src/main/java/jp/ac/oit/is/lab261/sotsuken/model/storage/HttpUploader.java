@@ -82,6 +82,7 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 Log.d("HttpUploader","TEST");
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect();//接続
+                setHttpCode( httpURLConnection.getResponseCode() );
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 Log.d("HttpUploader","UPLOAD");
                 httpURLConnection.setRequestMethod("POST");
@@ -113,8 +114,6 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                     }
                 }
             }
-
-            setHttpCode( httpURLConnection.getResponseCode() );
 
         }catch (IOException e){
             e.printStackTrace();

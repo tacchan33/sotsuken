@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -50,6 +49,11 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     private static void setHttpCode(Integer code){ httpCode = code; }
     public static Integer getHttpCode(){ return httpCode; }
 
+    private static Boolean test = false;
+    public static Boolean isTest(){
+        return test;
+    }
+
     /* アップロード情報 */
     private String macaddress = null;//送信元macアドレス
     private String[] bssid = new String[3];//ビーコンAPのBSSID
@@ -82,7 +86,11 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 Log.d("HttpUploader","TEST");
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect();//接続
-                setHttpCode( httpURLConnection.getResponseCode() );
+                if( HttpURLConnection.HTTP_OK <= HttpUploader.getHttpCode() && HttpUploader.getHttpCode() < HttpURLConnection.HTTP_MOVED_PERM ){
+                    test = true;
+                }else{
+                    test = false;
+                }
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 Log.d("HttpUploader","UPLOAD");
                 httpURLConnection.setRequestMethod("POST");
@@ -91,14 +99,14 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
                 String data =
-                        "id="+user+"&"+
-                                "password="+password+"&"+
-                                "bssid1="+bssid[0]+"&"+
-                                "level1="+level[0]+"&"+
-                                "bssid2="+bssid[1]+"&"+
-                                "level2="+level[1]+"&"+
-                                "bssid3="+bssid[2]+"&"+
-                                "level3="+level[2];
+                            "user="+user+"&"+
+                            "password="+password+"&"+
+                            "bssid1="+bssid[0]+"&"+
+                            "level1="+level[0]+"&"+
+                            "bssid2="+bssid[1]+"&"+
+                            "level2="+level[1]+"&"+
+                            "bssid3="+bssid[2]+"&"+
+                            "level3="+level[2];
                 // POSTデータ送信処理
                 try{
                     out = httpURLConnection.getOutputStream();
@@ -114,6 +122,8 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                     }
                 }
             }
+
+            setHttpCode( httpURLConnection.getResponseCode() );
 
         }catch (IOException e){
             e.printStackTrace();

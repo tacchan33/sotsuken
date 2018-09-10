@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity{
 
     //再描画
     private void reload(){
+        Toast.makeText(MainActivity.this,  "HTTP/"+HttpUploader.getHttpCode(),Toast.LENGTH_SHORT).show();
         /* WifiScannerServiceが起動を判断してボタンを切り替える */
         if(BackgroundService.isRunning() ){//WifiScannerが有効時
             toggleService.setChecked(true);
@@ -122,8 +123,7 @@ public class MainActivity extends AppCompatActivity{
             toggleService.setChecked(false);
         }
         /* アプリケーションサーバ接続確認でボタンを有効無効切り替える */
-        Toast.makeText(MainActivity.this,  "HTTP/"+HttpUploader.getHttpCode(),Toast.LENGTH_SHORT).show();
-        if( HttpURLConnection.HTTP_OK <= HttpUploader.getHttpCode() && HttpUploader.getHttpCode() < HttpURLConnection.HTTP_MOVED_PERM ){
+        if( HttpUploader.isTest() ){
             toggleService.setEnabled(true);
         }else{
             toggleService.setEnabled(false);

@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity{
             toggleService.setChecked(false);
         }
         /* アプリケーションサーバ接続確認でボタンを有効無効切り替える */
-        if( HttpUploader.isTest() ){
+        if( HttpURLConnection.HTTP_OK <= HttpUploader.getHttpCode() && HttpUploader.getHttpCode() < HttpURLConnection.HTTP_MOVED_PERM ){
             toggleService.setEnabled(true);
         }else{
             toggleService.setEnabled(false);

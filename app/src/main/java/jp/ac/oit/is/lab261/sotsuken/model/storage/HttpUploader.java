@@ -49,11 +49,6 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     private static void setHttpCode(Integer code){ httpCode = code; }
     public static Integer getHttpCode(){ return httpCode; }
 
-    private static Boolean test = false;
-    public static Boolean isTest(){
-        return test;
-    }
-
     /* アップロード情報 */
     private String macaddress = null;//送信元macアドレス
     private String[] bssid = new String[3];//ビーコンAPのBSSID
@@ -86,11 +81,7 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 Log.d("HttpUploader","TEST");
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect();//接続
-                if( HttpURLConnection.HTTP_OK <= HttpUploader.getHttpCode() && HttpUploader.getHttpCode() < HttpURLConnection.HTTP_MOVED_PERM ){
-                    test = true;
-                }else{
-                    test = false;
-                }
+                setHttpCode( httpURLConnection.getResponseCode() );
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 Log.d("HttpUploader","UPLOAD");
                 httpURLConnection.setRequestMethod("POST");
@@ -122,8 +113,6 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                     }
                 }
             }
-
-            setHttpCode( httpURLConnection.getResponseCode() );
 
         }catch (IOException e){
             e.printStackTrace();

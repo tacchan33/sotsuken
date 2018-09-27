@@ -34,12 +34,14 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     private String host = "";//アプリケーションサーバ
     private String email = "";//ユーザ名
     private String password = "";//パスワード
+    private Integer token = 10;
     private Integer timeout = 5000;
 
-    public HttpUploader(@Nullable String host, @Nullable String email, @Nullable String password, @Nullable Integer interval){
+    public HttpUploader(@Nullable String host, @Nullable String email, @Nullable String password, @Nullable Integer token, @Nullable Integer interval){
         this.host = host;
         this.email = email;
         this.password = password;
+        this.token = token;
         this.timeout = interval/2;
     }
 
@@ -50,10 +52,8 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     public static Integer getHttpCode(){ return httpCode; }
 
     /* アップロード情報 */
-    private String macaddress = null;//送信元macアドレス
     private String[] bssid = new String[3];//ビーコンAPのBSSID
     private Integer[] level = new Integer[3];//ビーコンAPの電波強度
-    public void setMACAddress(String mac){ this.macaddress = mac; }
     public void setBSSID(Integer index,String bssid){ this.bssid[index] = bssid; }
     public void setLEVEL(Integer index,Integer level){ this.level[index] = level; }
 
@@ -92,6 +92,7 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 String data =
                             "email="+email+"&"+
                             "password="+password+"&"+
+                            "token="+token+'&'+
                             "bssid[0]="+bssid[0]+"&"+
                             "level[0]="+level[0]+"&"+
                             "bssid[1]="+bssid[1]+"&"+

@@ -33,6 +33,13 @@
         android:inputType="textPassword" />
 
     <EditText
+        android:id="@+id/token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
         android:id="@+id/interval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

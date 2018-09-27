@@ -55,10 +55,6 @@ public class WifiScanner {
         Log.d("display","+++++++++++++++++++++++++++++++++");
     }
 
-    public String getMACAddress(){
-        return wifiManager.getConnectionInfo().getMacAddress();
-    }
-
     public String getBSSID(Integer index){
         return sortResult[index].BSSID;
     }

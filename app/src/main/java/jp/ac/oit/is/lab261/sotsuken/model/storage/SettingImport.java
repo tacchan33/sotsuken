@@ -12,6 +12,7 @@ public class SettingImport {
     private final String HOST = "host";//データのキー
     private final String EMAIL = "email";
     private final String PASSWORD = "password";
+    private final String TOKEN = "token";
     private  final String INTERVAL = "interval";
 
     private SharedPreferences sharedPreferences;
@@ -34,6 +35,10 @@ public class SettingImport {
         sharedPreferences.edit().putString(PASSWORD,password).commit();
     }
 
+    public void setToken(Integer token) {
+        sharedPreferences.edit().putInt(TOKEN,token).commit();
+    }
+
     public void setInterval(Integer interval){
         /* 1000で1秒 */
         sharedPreferences.edit().putInt(INTERVAL,interval).commit();
@@ -49,6 +54,10 @@ public class SettingImport {
 
     public String getPassword(){
         return sharedPreferences.getString(PASSWORD,"(例)password");
+    }
+
+    public Integer getToken(){
+        return sharedPreferences.getInt(TOKEN,0);
     }
 
     public Integer getInterval(){

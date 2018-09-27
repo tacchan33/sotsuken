@@ -16,14 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textUri" />
 
     <EditText
     android:id="@+id/email"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ems="10"
-    android:inputType="textPersonName" />
+    android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/interval"

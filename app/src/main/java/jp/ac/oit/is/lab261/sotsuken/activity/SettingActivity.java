@@ -44,7 +44,7 @@ public class SettingActivity extends AppCompatActivity {
         host.setText( setting.getHost() );
         email.setText( setting.getEmail() );
         password.setText( setting.getPassword() );
-        token.setText( String.valueOf(setting.getToken()) );
+        token.setText( setting.getToken() );
         interval.setText( String.valueOf(setting.getInterval()) );
 
         /* 保存ボタンイベント */
@@ -54,7 +54,7 @@ public class SettingActivity extends AppCompatActivity {
                 setting.setHost(host.getText().toString());
                 setting.setEmail(email.getText().toString());
                 setting.setPassword(password.getText().toString());
-                setting.setToken( Integer.valueOf(token.getText().toString()));
+                setting.setToken( token.getText().toString());
                 setting.setInterval( Integer.valueOf(interval.getText().toString()) );
 
                 HttpUploader httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getToken(),setting.getInterval());

@@ -34,10 +34,10 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
     private String host = "";//アプリケーションサーバ
     private String email = "";//ユーザ名
     private String password = "";//パスワード
-    private Integer token = 10;
+    private String token = "";//端末用トークン
     private Integer timeout = 5000;
 
-    public HttpUploader(@Nullable String host, @Nullable String email, @Nullable String password, @Nullable Integer token, @Nullable Integer interval){
+    public HttpUploader(@Nullable String host, @Nullable String email, @Nullable String password, @Nullable String token, @Nullable Integer interval){
         this.host = host;
         this.email = email;
         this.password = password;

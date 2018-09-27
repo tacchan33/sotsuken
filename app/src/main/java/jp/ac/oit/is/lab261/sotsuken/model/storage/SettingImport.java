@@ -35,8 +35,8 @@ public class SettingImport {
         sharedPreferences.edit().putString(PASSWORD,password).commit();
     }
 
-    public void setToken(Integer token) {
-        sharedPreferences.edit().putInt(TOKEN,token).commit();
+    public void setToken(String token) {
+        sharedPreferences.edit().putString(TOKEN,token).commit();
     }
 
     public void setInterval(Integer interval){
@@ -49,15 +49,15 @@ public class SettingImport {
     }
 
     public String getEmail(){
-        return sharedPreferences.getString(EMAIL,"(例)sotsuken@oit.ac.jp");
+        return sharedPreferences.getString(EMAIL,"sotsuken@oit.ac.jp");
     }
 
     public String getPassword(){
-        return sharedPreferences.getString(PASSWORD,"(例)password");
+        return sharedPreferences.getString(PASSWORD,"password");
     }
 
-    public Integer getToken(){
-        return sharedPreferences.getInt(TOKEN,0);
+    public String getToken(){
+        return sharedPreferences.getString(TOKEN,"token");
     }
 
     public Integer getInterval(){

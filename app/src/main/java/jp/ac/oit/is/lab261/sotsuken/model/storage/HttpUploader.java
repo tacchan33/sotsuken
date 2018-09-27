@@ -32,13 +32,13 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
     /* 接続必要情報 */
     private String host = "";//アプリケーションサーバ
-    private String user = "";//ユーザ名
+    private String email = "";//ユーザ名
     private String password = "";//パスワード
     private Integer timeout = 5000;
 
-    public HttpUploader(@Nullable String host, @Nullable String user, @Nullable String password, @Nullable Integer interval){
+    public HttpUploader(@Nullable String host, @Nullable String email, @Nullable String password, @Nullable Integer interval){
         this.host = host;
-        this.user = user;
+        this.email = email;
         this.password = password;
         this.timeout = interval/2;
     }
@@ -90,14 +90,14 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
                 String data =
-                            "user="+user+"&"+
+                            "email="+email+"&"+
                             "password="+password+"&"+
-                            "bssid1="+bssid[0]+"&"+
-                            "level1="+level[0]+"&"+
-                            "bssid2="+bssid[1]+"&"+
-                            "level2="+level[1]+"&"+
-                            "bssid3="+bssid[2]+"&"+
-                            "level3="+level[2];
+                            "bssid[0]="+bssid[0]+"&"+
+                            "level[0]="+level[0]+"&"+
+                            "bssid[1]="+bssid[1]+"&"+
+                            "level[1]="+level[1]+"&"+
+                            "bssid[2]="+bssid[2]+"&"+
+                            "level[2]="+level[2];
                 // POSTデータ送信処理
                 try{
                     out = httpURLConnection.getOutputStream();

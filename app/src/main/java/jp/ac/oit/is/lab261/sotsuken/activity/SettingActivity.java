@@ -18,7 +18,7 @@ public class SettingActivity extends AppCompatActivity {
 
     WifiManager wifiManager = null;
 
-    EditText host,user,password,interval;
+    EditText host,email,password,interval;
     Button commit;
 
     @Override
@@ -35,13 +35,13 @@ public class SettingActivity extends AppCompatActivity {
         getSupportActionBar().setTitle( getString(R.string.menu_setting) );
 
         host = (EditText)findViewById(R.id.host);
-        user = (EditText)findViewById(R.id.user);
+        email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
         interval = (EditText)findViewById(R.id.interval);
         commit = (Button)findViewById(R.id.commit);
 
         host.setText( setting.getHost() );
-        user.setText( setting.getUser() );
+        email.setText( setting.getEmail() );
         password.setText( setting.getPassword() );
         interval.setText( String.valueOf(setting.getInterval()) );
 
@@ -50,11 +50,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 setting.setHost(host.getText().toString());
-                setting.setUser(user.getText().toString());
+                setting.setEmail(email.getText().toString());
                 setting.setPassword(password.getText().toString());
                 setting.setInterval( Integer.valueOf(interval.getText().toString()) );
 
-                HttpUploader httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword(),setting.getInterval());
+                HttpUploader httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getInterval());
                 httpUploader.execute(HttpUploader.TEST);//通信
 
                 Toast.makeText(SettingActivity.this,  "保存しました",Toast.LENGTH_SHORT).show();

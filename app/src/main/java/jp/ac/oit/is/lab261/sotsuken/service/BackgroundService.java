@@ -48,7 +48,7 @@ public class BackgroundService extends Service {
 
                 wifiScanner.WifiScan();//WiFiビーコンスキャン
 
-                httpUploader = new HttpUploader(setting.getHost(),setting.getUser(),setting.getPassword(),setting.getInterval());
+                httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getInterval());
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
                     httpUploader.setMACAddress(wifiScanner.getMACAddress());
                     httpUploader.setBSSID(i,wifiScanner.getBSSID(i));

@@ -10,7 +10,7 @@ public class SettingImport {
     private final String FILE = "setting";
 
     private final String HOST = "host";//データのキー
-    private final String USER = "user";
+    private final String EMAIL = "email";
     private final String PASSWORD = "password";
     private  final String INTERVAL = "interval";
 
@@ -26,8 +26,8 @@ public class SettingImport {
         sharedPreferences.edit().putString(HOST,host).commit();
     }
 
-    public void setUser(String user){
-        sharedPreferences.edit().putString(USER,user).commit();
+    public void setEmail(String email){
+        sharedPreferences.edit().putString(EMAIL,email).commit();
     }
 
     public void setPassword(String password){
@@ -43,8 +43,8 @@ public class SettingImport {
         return sharedPreferences.getString(HOST,"(例)http://192.168.0.1/index.php");
     }
 
-    public String getUser(){
-        return sharedPreferences.getString(USER,"(例)username");
+    public String getEmail(){
+        return sharedPreferences.getString(EMAIL,"(例)sotsuken@oit.ac.jp");
     }
 
     public String getPassword(){

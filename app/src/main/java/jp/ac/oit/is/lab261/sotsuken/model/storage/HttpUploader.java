@@ -92,7 +92,7 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 String data =
                             "email="+email+"&"+
                             "password="+password+"&"+
-                            "token="+token+'&'+
+                            "deviceToken="+token+'&'+
                             "bssid[0]="+bssid[0]+"&"+
                             "level[0]="+level[0]+"&"+
                             "bssid[1]="+bssid[1]+"&"+

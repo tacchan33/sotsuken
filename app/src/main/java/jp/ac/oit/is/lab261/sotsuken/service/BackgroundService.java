@@ -50,10 +50,13 @@ public class BackgroundService extends Service {
 
                 httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getToken(),setting.getInterval());
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
-                    httpUploader.setBSSID(i,wifiScanner.getBSSID(i));
-                    httpUploader.setLEVEL(i,wifiScanner.getLEVEL(i));
+                    //if( wifiScanner.getBSSID(i) != null ) {
+                        httpUploader.setBSSID(i, wifiScanner.getBSSID(i));
+                        httpUploader.setLEVEL(i, wifiScanner.getLEVEL(i));
+                    //}
                 }
                 httpUploader.execute(HttpUploader.UPLOAD);//通信
+                httpUploader = null;
             }
         }, 0, setting.getInterval());
         return START_STICKY;

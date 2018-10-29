@@ -93,12 +93,12 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                             "email="+email+"&"+
                             "password="+password+"&"+
                             "device_token="+token+'&'+
-                            "accesspoint_id1="+bssid[0]+"&"+
-                            "level1="+level[0]+"&"+
-                            "accesspoint_id2="+bssid[1]+"&"+
-                            "level2="+level[1]+"&"+
-                            "accesspoint_id3="+bssid[2]+"&"+
-                            "level3="+level[2];
+                            "accesspoint_id[0]="+bssid[0]+"&"+
+                            "received_power[0]="+level[0]+"&"+
+                            "accesspoint_id[1]="+bssid[1]+"&"+
+                            "received_power[1]="+level[1]+"&"+
+                            "accesspoint_id[2]="+bssid[2]+"&"+
+                            "received_power[2]="+level[2];
                 // POSTデータ送信処理
                 try{
                     out = httpURLConnection.getOutputStream();

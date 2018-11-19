@@ -59,7 +59,7 @@ public class WifiScanner {
         return sortResult[index].BSSID;
     }
 
-    public String getSSID(Integer index){
+    public String getESSID(Integer index){
         return sortResult[index].SSID;
     }
 

@@ -43,6 +43,12 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
         this.password = password;
         this.token = token;
         this.timeout = interval/2;
+
+        for(int i=0;i<3;i++){
+            bssid[i] = "";
+            essid[i] = "";
+            level[i] = -128;
+        }
     }
 
 
@@ -53,8 +59,10 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
     /* アップロード情報 */
     private String[] bssid = new String[3];//ビーコンAPのBSSID
+    private String[] essid = new String[3];//ビーコンAPのESSID
     private Integer[] level = new Integer[3];//ビーコンAPの電波強度
     public void setBSSID(Integer index,String bssid){ this.bssid[index] = bssid; }
+    public void setESSID(Integer index,String essid){ this.essid[index] = essid; }
     public void setLEVEL(Integer index,Integer level){ this.level[index] = level; }
 
     HttpURLConnection httpURLConnection = null;//コネクション
@@ -94,10 +102,13 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                             "password="+password+"&"+
                             "device_token="+token+'&'+
                             "accesspoint_id[0]="+bssid[0]+"&"+
+                            "essid[0]="+essid[0]+"&"+
                             "received_power[0]="+level[0]+"&"+
                             "accesspoint_id[1]="+bssid[1]+"&"+
+                            "essid[1]="+essid[1]+"&"+
                             "received_power[1]="+level[1]+"&"+
                             "accesspoint_id[2]="+bssid[2]+"&"+
+                            "essid[2]="+essid[2]+"&"+
                             "received_power[2]="+level[2];
                 // POSTデータ送信処理
                 try{

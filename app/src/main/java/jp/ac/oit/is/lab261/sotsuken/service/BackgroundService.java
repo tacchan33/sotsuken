@@ -52,6 +52,7 @@ public class BackgroundService extends Service {
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
                     //if( wifiScanner.getBSSID(i) != null ) {
                         httpUploader.setBSSID(i, wifiScanner.getBSSID(i));
+                        httpUploader.setESSID(i, wifiScanner.getESSID(i));
                         httpUploader.setLEVEL(i, wifiScanner.getLEVEL(i));
                     //}
                 }

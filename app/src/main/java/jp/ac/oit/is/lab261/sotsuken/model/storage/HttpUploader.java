@@ -49,6 +49,7 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
             essid[i] = "";
             level[i] = -128;
         }
+        Log.d("HttpUploader","initialize");
     }
 
 
@@ -98,18 +99,18 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
                 String data =
-                            "email="+email+"&"+
-                            "password="+password+"&"+
-                            "device_token="+token+'&'+
-                            "accesspoint_id[0]="+bssid[0]+"&"+
-                            "essid[0]="+essid[0]+"&"+
-                            "received_power[0]="+level[0]+"&"+
-                            "accesspoint_id[1]="+bssid[1]+"&"+
-                            "essid[1]="+essid[1]+"&"+
-                            "received_power[1]="+level[1]+"&"+
-                            "accesspoint_id[2]="+bssid[2]+"&"+
-                            "essid[2]="+essid[2]+"&"+
-                            "received_power[2]="+level[2];
+                            "email="+email+
+                            "&password="+password+
+                            "&device_token="+token;
+
+                for(int i = 0 ; i < 3 ; i++ ){
+                    if( !bssid[i].isEmpty() ){
+                        data += "&accesspoint_id["+i+"]="+bssid[i];
+                        data += "&essid["+i+"]="+essid[i];
+                        data += "&received_power["+i+"]="+level[i];
+                    }
+                }
+
                 // POSTデータ送信処理
                 try{
                     out = httpURLConnection.getOutputStream();

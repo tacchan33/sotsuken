@@ -10,10 +10,11 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ddd"/>
+        android:text="Wi-Fiビーコンによる位置情報特定システム" />
+
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ddda"/>
+        android:text="大阪工業大学 辰巳班 2018年度卒業研究" />
 </LinearLayout>

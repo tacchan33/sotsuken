@@ -56,15 +56,27 @@ public class WifiScanner {
     }
 
     public String getBSSID(Integer index){
-        return sortResult[index].BSSID;
+        if( sortResult[index] == null){
+            return "";
+        }else {
+            return sortResult[index].BSSID;
+        }
     }
 
     public String getESSID(Integer index){
-        return sortResult[index].SSID;
+        if( sortResult[index] == null){
+            return "";
+        }else {
+            return sortResult[index].SSID;
+        }
     }
 
     public Integer getLEVEL(Integer index){
-        return sortResult[index].level;
+        if( sortResult[index] == null){
+            return -128;
+        }else {
+            return sortResult[index].level;
+        }
     }
 
 }

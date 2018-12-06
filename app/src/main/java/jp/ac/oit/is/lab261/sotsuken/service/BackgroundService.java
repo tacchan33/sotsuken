@@ -53,9 +53,9 @@ public class BackgroundService extends Service {
 
                 httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getToken(),setting.getInterval());
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
-                        httpUploader.setBSSID(i, wifiScanner.getBSSID(i));
-                        httpUploader.setESSID(i, wifiScanner.getESSID(i));
-                        httpUploader.setLEVEL(i, wifiScanner.getLEVEL(i));
+                    httpUploader.setBSSID(i, wifiScanner.getBSSID(i));
+                    httpUploader.setESSID(i, wifiScanner.getESSID(i));
+                    httpUploader.setLEVEL(i, wifiScanner.getLEVEL(i));
                 }
                 httpUploader.execute(HttpUploader.UPLOAD);//通信
                 httpUploader.initialize();
@@ -70,9 +70,7 @@ public class BackgroundService extends Service {
         super.onDestroy();
         if(timer != null){
             timer.cancel();
-            timer = null;
         }
-        httpUploader = null;
     }
 
     @Override

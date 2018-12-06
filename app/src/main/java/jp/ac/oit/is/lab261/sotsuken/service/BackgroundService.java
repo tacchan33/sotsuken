@@ -58,7 +58,6 @@ public class BackgroundService extends Service {
                     httpUploader.setLEVEL(i, wifiScanner.getLEVEL(i));
                 }
                 httpUploader.execute(HttpUploader.UPLOAD);//通信
-                httpUploader.initialize();
             }
         }, 0, setting.getInterval());
         return START_STICKY;

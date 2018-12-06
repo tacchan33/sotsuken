@@ -29,7 +29,6 @@ public class WifiScanner {
         }
         List<ScanResult> scanResults = wifiManager.getScanResults();
         sort(scanResults);
-        display();
     }
 
     private void sort(List<ScanResult> scanResult){
@@ -42,17 +41,6 @@ public class WifiScanner {
                 sortResult[2] = result;
             }
         }
-    }
-
-    private void display(){
-        for(int i=0;i<RANK;i++){
-            Log.d("display","SSID:"+sortResult[i].SSID);
-            Log.d("display","BSSID:"+sortResult[i].BSSID);
-            Log.d("display","LEVEL:"+sortResult[i].level);
-            Log.d("display","-------------------------------------");
-        }
-        Log.d("display","+++++++++++++++++++++++++++++++++");
-        Log.d("display","+++++++++++++++++++++++++++++++++");
     }
 
     public String getBSSID(Integer index){

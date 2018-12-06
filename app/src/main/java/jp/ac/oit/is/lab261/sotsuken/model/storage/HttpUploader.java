@@ -88,8 +88,27 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
 
             if ( params[0].equals(HttpUploader.TEST) ) {//テスト接続
                 Log.d("HttpUploader","TEST");
-                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);//リクエストのbody送信を許可する
+                httpURLConnection.setDoInput(true);//レスポンスのbody送信を許可する
                 httpURLConnection.connect();//接続
+                OutputStream out = null;//出力
+                String data ="email="+email+"&password="+password+"&device_token="+token;
+
+                // POSTデータ送信処理
+                try{
+                    out = httpURLConnection.getOutputStream();
+                    out.write( data.getBytes("UTF-8") );
+                    out.flush();
+                }catch(IOException e) {
+                    /* POST送信エラー */
+                    e.printStackTrace();
+                }finally{
+                    /* パケット破棄 */
+                    if (out != null) {
+                        out.close();
+                    }
+                }
                 setHttpCode( httpURLConnection.getResponseCode() );
             } else if ( params[0].equals(HttpUploader.UPLOAD) ) {//データアップロード
                 Log.d("HttpUploader","UPLOAD");
@@ -99,7 +118,8 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                 httpURLConnection.connect();//接続
                 OutputStream out = null;//出力
                 String data =
-                            "email="+email+
+                            "update=true"+
+                            "&email="+email+
                             "&password="+password+
                             "&device_token="+token;
 

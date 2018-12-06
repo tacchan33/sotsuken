@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,7 +25,7 @@ public class BackgroundService extends Service {
     private WifiScanner wifiScanner ;//WiFiビーコンスキャン
     private HttpUploader httpUploader;//データHTTPアップロード
 
-    private Timer timer = new Timer();//ループ用タイマー
+    private Timer timer = null;//ループ用タイマー
 
 
     public void onCreate(){
@@ -32,6 +33,8 @@ public class BackgroundService extends Service {
         setting = new SettingImport(getApplicationContext());
         wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiScanner = new WifiScanner(getApplicationContext());
+        httpUploader = null;
+        timer = new Timer();
 
         setRunning(true);
     }
@@ -50,14 +53,12 @@ public class BackgroundService extends Service {
 
                 httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getToken(),setting.getInterval());
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
-                    //if( wifiScanner.getBSSID(i) != null ) {
                         httpUploader.setBSSID(i, wifiScanner.getBSSID(i));
                         httpUploader.setESSID(i, wifiScanner.getESSID(i));
                         httpUploader.setLEVEL(i, wifiScanner.getLEVEL(i));
-                    //}
                 }
                 httpUploader.execute(HttpUploader.UPLOAD);//通信
-                httpUploader = null;
+                httpUploader.initialize();
             }
         }, 0, setting.getInterval());
         return START_STICKY;
@@ -69,7 +70,9 @@ public class BackgroundService extends Service {
         super.onDestroy();
         if(timer != null){
             timer.cancel();
+            timer = null;
         }
+        httpUploader = null;
     }
 
     @Override

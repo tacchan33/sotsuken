@@ -44,6 +44,10 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
         this.token = token;
         this.timeout = interval/2;
 
+        initialize();
+    }
+
+    public void initialize(){
         for(int i=0;i<3;i++){
             bssid[i] = "";
             essid[i] = "";

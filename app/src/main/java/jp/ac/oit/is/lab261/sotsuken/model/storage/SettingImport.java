@@ -61,7 +61,7 @@ public class SettingImport {
     }
 
     public Integer getInterval(){
-        return sharedPreferences.getInt(INTERVAL,60000);
+        return sharedPreferences.getInt(INTERVAL,15000);
     }
 
 

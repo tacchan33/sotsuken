@@ -27,8 +27,14 @@ public class WifiScanner {
         for(int i=0;i<RANK;i++){
             sortResult[i] = null;
         }
+        wifiManager.startScan();
         List<ScanResult> scanResults = wifiManager.getScanResults();
         sort(scanResults);
+
+        Log.d("HttpUploader","[スキャンNo]:BSSID\tESSID\tLEVEL\t");
+        for(int i=0;i<3;i++){
+            Log.d("HttpUploader","["+i+"]:"+sortResult[i].BSSID+"\t"+sortResult[i].SSID+"\t"+sortResult[i].level+"\t"+sortResult[i].timestamp);
+        }
     }
 
     private void sort(List<ScanResult> scanResult){

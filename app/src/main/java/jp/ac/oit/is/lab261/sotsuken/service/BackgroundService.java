@@ -32,7 +32,7 @@ public class BackgroundService extends Service {
         super.onCreate();
         setting = new SettingImport(getApplicationContext());
         wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        wifiScanner = new WifiScanner(getApplicationContext());
+        wifiScanner = null;
         httpUploader = null;
         timer = new Timer();
 
@@ -48,10 +48,10 @@ public class BackgroundService extends Service {
                 if( !wifiManager.isWifiEnabled() ){
                     wifiManager.setWifiEnabled(true);
                 }
+                wifiScanner = new WifiScanner(getApplicationContext());
+                httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getToken(),setting.getInterval());
 
                 wifiScanner.WifiScan();//WiFiビーコンスキャン
-
-                httpUploader = new HttpUploader(setting.getHost(),setting.getEmail(),setting.getPassword(),setting.getToken(),setting.getInterval());
                 for(int i=0;i<wifiScanner.RANK;i++){//データセット
                     httpUploader.setBSSID(i, wifiScanner.getBSSID(i));
                     httpUploader.setESSID(i, wifiScanner.getESSID(i));

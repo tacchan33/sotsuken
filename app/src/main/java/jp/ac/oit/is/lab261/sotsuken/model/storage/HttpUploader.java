@@ -127,11 +127,9 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
                             "&password="+password+
                             "&device_token="+token;
 
+                Log.d("HttpUploader","[送信No]:BSSID\tESSID\tLEVEL\t");
                 for(int i = 0 ; i < 3 ; i++ ){
-                    Log.d("HttpUploader","BSSID"+i+":"+bssid[i]);
-                    Log.d("HttpUploader","ESSID"+i+":"+essid[i]);
-                    Log.d("HttpUploader","LEVEL"+i+":"+level[i]);
-                    Log.d("HttpUploader","-------------------------------------------------");
+                    Log.d("HttpUploader","["+i+"]:"+bssid[i]+"\t"+essid[i]+"\t"+level[i]);
                     if( !bssid[i].isEmpty() ){
                         data += "&accesspoint_id["+i+"]="+bssid[i];
                         data += "&essid["+i+"]="+essid[i];
@@ -162,6 +160,7 @@ public class HttpUploader extends AsyncTask<String, Integer, Integer> {
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
             }
+            Log.d("HttpUploader","++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
 
         return null;

@@ -1,4 +1,4 @@
-package jp.ac.oit.is.lab261.sotsuken;
+package jp.ac.oit.is.lab261.sotsuken.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
